@@ -1,4 +1,5 @@
-import { fetchAllPlayers } from './ajaxHelpers';
+import { addNewPlayer, fetchAllPlayers, fetchSinglePlayer, removePlayer, } from "./ajaxHelpers";
+
 
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
@@ -23,6 +24,7 @@ export const renderAllPlayers = (playerList) => {
         </div>
         <img src="${pup.imageUrl}" alt="photo of ${pup.name} the puppy">
         <button class="detail-button" data-id=${pup.id}>See details</button>
+        <button class="delete-button" data-id=${pup.id}>Remove from roster</button>
       </div>
     `;
     playerContainerHTML += pupHTML;
@@ -37,12 +39,18 @@ export const renderAllPlayers = (playerList) => {
   let detailButtons = [...document.getElementsByClassName('detail-button')];
   for (let i = 0; i < detailButtons.length; i++) {
     const button = detailButtons[i];
-    button.addEventListener('click', async () => {
-      /*
-        YOUR CODE HERE
-      */
+    button.addEventListener('click', async (event) => {
+      let pupId = event.target.dataset.id;
+      const pupObj = await fetchSinglePlayer(pupId);
+       renderSinglePlayer(pupObj);
+
+
+     
+      
+      
     });
   }
+
 };
 
 export const renderSinglePlayer = (playerObj) => {
