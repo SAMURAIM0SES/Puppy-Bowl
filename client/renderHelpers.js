@@ -8,6 +8,7 @@ export const renderAllPlayers = (playerList) => {
   if (!playerList || !playerList.length) {
     playerContainer.innerHTML = '<h3>No players to display!</h3>';
     return;
+    
   }
 
   // Loop through the list of players, and construct some HTML to display each one
