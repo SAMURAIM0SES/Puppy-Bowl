@@ -1,4 +1,4 @@
-import { renderNewPlayerForm } from "./renderHelpers";
+
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = "2206-FTB-ET-WEB-FT";
 // Use the APIURL variable for fetch requests
@@ -46,12 +46,17 @@ export const addNewPlayer = async (playerObj) => {
 };
 
 export const removePlayer = async (playerId) => {
-    await fetch(`${APIURL}/players`,{
-        method: 'DELETE'
+  try {
+    const response = await fetch(`${APIURL}/players/${playerId}`, {
+      method: "DELETE",
     });
-    let response = await fetch(`${APIURL}/players/${playerId}`,{
-        method: 'DELETE'
-    })
-    let result = await response.json();
-    console.log(result)
+    const result = await response.json();
+    if (result.error) throw result.error;
+    return;
+  } catch (err) {
+    console.error(
+      `Whoops, trouble removing player #${playerId} from the roster!`,
+      err
+    );
+  }
 };
